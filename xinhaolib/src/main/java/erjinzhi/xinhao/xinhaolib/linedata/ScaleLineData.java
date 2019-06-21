@@ -120,6 +120,16 @@ public class ScaleLineData implements IBaseData, IScaleLineData {
 
 
     /**
+     * 获取刻度线长度
+     */
+
+    @Override
+    public int getScaleWidth() {
+
+        return mHeight - BOTTOM_DISTANCE - TOP_DISTANCE;
+    }
+
+    /**
      * 计算线的宽高度
      */
     @Override

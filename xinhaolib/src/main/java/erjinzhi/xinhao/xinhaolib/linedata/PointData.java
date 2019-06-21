@@ -60,6 +60,10 @@ public class PointData implements IBaseData, IPointData, DataNotifyDataSetChange
      */
 
     private Paint mPaint;
+    /**
+     * 刻度线的长度
+     */
+    private int mScaleWidth;
 
 
     //平均值
@@ -124,9 +128,17 @@ public class PointData implements IBaseData, IPointData, DataNotifyDataSetChange
 
     }
 
+    //设置刻度线长度
+    @Override
+    public void setScaleWidth(int mScaleWidth) {
+
+        this.mScaleWidth = mScaleWidth;
+
+    }
+
     private void calculateLifeText() {
         //刻度线分为10个
-
+        //todo 计算左边刻度线，以显示左边刻度线的Text,现在左边线的高度都传进来了了
 
 
     }

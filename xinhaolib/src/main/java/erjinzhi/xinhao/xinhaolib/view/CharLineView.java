@@ -151,8 +151,11 @@ public abstract class CharLineView extends View implements ViewRefreshListener, 
         mPointData.setPointDataViewRefreshListener(this);
         //传入未处理的数据
         mPointData.setList(mCharViewData.getList());
+        //设置刻度线的长度
+        mPointData.setScaleWidth(mScaleLineData.getScaleWidth());
         //开始计算
         mPointData.calculate();
+
 
         /**
          *

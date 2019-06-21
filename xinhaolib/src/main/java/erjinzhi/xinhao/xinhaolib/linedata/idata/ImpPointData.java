@@ -45,4 +45,7 @@ public interface ImpPointData {
 
     //设置刻度线个数
     public void setScale(int mScale);
+
+    //获取刻度线长度
+    public void setScaleWidth(int mScaleWidth);
 }

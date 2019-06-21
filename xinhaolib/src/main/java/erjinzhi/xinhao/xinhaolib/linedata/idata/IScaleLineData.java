@@ -51,4 +51,7 @@ public interface IScaleLineData {
 
     //获取底部的东西
     public ArrayList<ScaleLineBoomStringBean> getScaleLineBoomStringBeans();
+
+    //获取刻度线长度
+    public int getScaleWidth();
 }
