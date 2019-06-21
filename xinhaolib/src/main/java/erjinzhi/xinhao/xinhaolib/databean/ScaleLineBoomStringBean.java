@@ -1,6 +1,6 @@
 package erjinzhi.xinhao.xinhaolib.databean;
 
-public class ScaleLineRightStringBean {
+public class ScaleLineBoomStringBean {
     private String text;
 
     private int color;

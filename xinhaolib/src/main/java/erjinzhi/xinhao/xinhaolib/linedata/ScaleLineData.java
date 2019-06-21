@@ -6,7 +6,7 @@ import android.graphics.Paint;
 import java.util.ArrayList;
 
 import erjinzhi.xinhao.xinhaolib.databean.ScaleLineLifeStringBean;
-import erjinzhi.xinhao.xinhaolib.databean.ScaleLineRightStringBean;
+import erjinzhi.xinhao.xinhaolib.databean.ScaleLineBoomStringBean;
 import erjinzhi.xinhao.xinhaolib.linedata.idata.IScaleLineData;
 import erjinzhi.xinhao.xinhaolib.view.viewlistener.ViewRefreshListener;
 
@@ -55,7 +55,7 @@ public class ScaleLineData implements IBaseData, IScaleLineData {
     /**
      * 获取刻度线底部的值
      */
-    private ArrayList<ScaleLineRightStringBean> ScaleLineRightStringBeans;
+    private ArrayList<ScaleLineBoomStringBean> scaleLineBoomStringBeans;
 
 
     public ScaleLineData(int mWidth, int mHeight) {
@@ -188,8 +188,20 @@ public class ScaleLineData implements IBaseData, IScaleLineData {
 
 
     /**
-     * 获取刻度线的值
+     * 获取刻度线左边的值
      */
 
+    public void setScaleLineLifeStringBeans(ArrayList<ScaleLineLifeStringBean> scaleLineLifeStringBeans) {
+        ScaleLineLifeStringBeans = scaleLineLifeStringBeans;
+    }
 
+
+    /**
+     * 获取刻度线底部的值
+     * @param scaleLineBoomStringBeans
+     */
+
+    public void setScaleLineBoomStringBeans(ArrayList<ScaleLineBoomStringBean> scaleLineBoomStringBeans) {
+        this.scaleLineBoomStringBeans = scaleLineBoomStringBeans;
+    }
 }
