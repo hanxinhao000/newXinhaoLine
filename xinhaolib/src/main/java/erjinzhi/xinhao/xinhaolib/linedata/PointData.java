@@ -8,14 +8,17 @@ import java.util.List;
 
 import erjinzhi.xinhao.xinhaolib.databean.LineCharBean;
 import erjinzhi.xinhao.xinhaolib.databean.LineCharViewData;
+import erjinzhi.xinhao.xinhaolib.databean.ScaleLineBoomStringBean;
+import erjinzhi.xinhao.xinhaolib.databean.ScaleLineLifeStringBean;
 import erjinzhi.xinhao.xinhaolib.databean.listener.DataNotifyDataSetChangedListener;
+import erjinzhi.xinhao.xinhaolib.linedata.idata.ImpPointData;
 import erjinzhi.xinhao.xinhaolib.linedata.listener.PointDataViewRefreshListener;
 import erjinzhi.xinhao.xinhaolib.utils.UIUtils;
 
 /**
  * 专门处理点的一个类
  */
-public class PointData implements IBaseData, IPointData,DataNotifyDataSetChangedListener {
+public class PointData implements IBaseData, IPointData, DataNotifyDataSetChangedListener, ImpPointData {
 
 
     /**
@@ -39,6 +42,20 @@ public class PointData implements IBaseData, IPointData,DataNotifyDataSetChanged
     private int mHeight;
 
     /**
+     * 传入左边刻度线的值
+     */
+    private ArrayList<ScaleLineLifeStringBean> mScaleLineLifeStringBeans;
+    /**
+     * 获取刻度线底部的值
+     */
+    private ArrayList<ScaleLineBoomStringBean> scaleLineBoomStringBeans;
+
+    /**
+     * 刻度线个数
+     */
+    private int mScale = 0;
+
+    /**
      * 自带画笔
      */
 
@@ -49,6 +66,7 @@ public class PointData implements IBaseData, IPointData,DataNotifyDataSetChanged
     private float average = 0;
     private XScale mXScale;
 
+    @Override
     public void setList(List<LineCharBean> mList) {
 
         this.mList = mList;
@@ -60,12 +78,13 @@ public class PointData implements IBaseData, IPointData,DataNotifyDataSetChanged
     }
 
     //设置View高度
-
+    @Override
     public void setViewHeight(int mHeight) {
         this.mHeight = mHeight;
 
     }
 
+    @Override
     public void setPointDataViewRefreshListener(PointDataViewRefreshListener mPointDataViewRefreshListener) {
 
         this.mPointDataViewRefreshListener = mPointDataViewRefreshListener;
@@ -73,7 +92,7 @@ public class PointData implements IBaseData, IPointData,DataNotifyDataSetChanged
     }
 
     //开始处理点数据
-
+    @Override
     public void calculate() {
 
         //先初始化画笔
@@ -88,6 +107,8 @@ public class PointData implements IBaseData, IPointData,DataNotifyDataSetChanged
         pointHeight(mid);
         //高度已计算完毕，开始计算宽度
         pointWidth();
+        //计算左边Text的位置
+        calculateLifeText();
         //通知视图说数据全部已算好
         if (mPointDataViewRefreshListener != null) {
             mPointDataViewRefreshListener.refreshPointDataView();
@@ -95,10 +116,26 @@ public class PointData implements IBaseData, IPointData,DataNotifyDataSetChanged
 
     }
 
+    //设置刻度线个数
+    @Override
+    public void setScale(int mScale) {
+
+        this.mScale = mScale;
+
+    }
+
+    private void calculateLifeText() {
+        //刻度线分为10个
+
+
+
+    }
+
+
     /**
      * 取得画笔
      */
-
+    @Override
     public Paint getPaint() {
         return mPaint;
     }
@@ -262,18 +299,58 @@ public class PointData implements IBaseData, IPointData,DataNotifyDataSetChanged
      *
      * @return
      */
-
+    @Override
     public List<LineCharViewData> getViewPointCoordinatesList() {
         return mViewPointCoordinatesList;
     }
 
     /**
      * 用户通知刷新数据
-     *
      */
     @Override
     public void notifyDataSetChanged() {
 
 
+    }
+
+
+    /**
+     * 设置刻度线左边的值
+     */
+
+    @Override
+    public void setScaleLineLifeStringBeans(ArrayList<ScaleLineLifeStringBean> scaleLineLifeStringBeans) {
+        mScaleLineLifeStringBeans = scaleLineLifeStringBeans;
+    }
+
+
+    /**
+     * 设置刻度线底部的值
+     *
+     * @param scaleLineBoomStringBeans
+     */
+    @Override
+    public void setScaleLineBoomStringBeans(ArrayList<ScaleLineBoomStringBean> scaleLineBoomStringBeans) {
+        this.scaleLineBoomStringBeans = scaleLineBoomStringBeans;
+    }
+
+    /**
+     * 获取左边的一些东西
+     *
+     * @return
+     */
+    @Override
+    public ArrayList<ScaleLineLifeStringBean> getScaleLineLifeStringBeans() {
+        return mScaleLineLifeStringBeans;
+    }
+
+    /**
+     * 获取底部的一些东西
+     *
+     * @return
+     */
+    @Override
+    public ArrayList<ScaleLineBoomStringBean> getScaleLineBoomStringBeans() {
+        return scaleLineBoomStringBeans;
     }
 }

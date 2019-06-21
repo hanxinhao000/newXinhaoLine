@@ -2,6 +2,10 @@ package erjinzhi.xinhao.xinhaolib.linedata.idata;
 
 import android.graphics.Paint;
 
+import java.util.ArrayList;
+
+import erjinzhi.xinhao.xinhaolib.databean.ScaleLineBoomStringBean;
+import erjinzhi.xinhao.xinhaolib.databean.ScaleLineLifeStringBean;
 import erjinzhi.xinhao.xinhaolib.view.viewlistener.ViewRefreshListener;
 
 public interface IScaleLineData {
@@ -32,4 +36,19 @@ public interface IScaleLineData {
 
     //设置刷新
     public void setViewRefreshListener(ViewRefreshListener mViewRefreshListener);
+
+    //获取刻度线左边的值
+    public void setScaleLineLifeStringBeans(ArrayList<ScaleLineLifeStringBean> scaleLineLifeStringBeans);
+
+    //获取刻度线底部的值
+    public void setScaleLineBoomStringBeans(ArrayList<ScaleLineBoomStringBean> scaleLineBoomStringBeans);
+
+    //计算Text位置
+    public void calculateString();
+
+    //获取左边的东西
+    public ArrayList<ScaleLineLifeStringBean> getScaleLineLifeStringBeans();
+
+    //获取底部的东西
+    public ArrayList<ScaleLineBoomStringBean> getScaleLineBoomStringBeans();
 }

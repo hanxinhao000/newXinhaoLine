@@ -17,6 +17,7 @@ import erjinzhi.xinhao.xinhaolib.linedata.PointData;
 import erjinzhi.xinhao.xinhaolib.linedata.ScaleLineData;
 import erjinzhi.xinhao.xinhaolib.linedata.idata.ILineData;
 import erjinzhi.xinhao.xinhaolib.linedata.idata.IScaleLineData;
+import erjinzhi.xinhao.xinhaolib.linedata.idata.ImpPointData;
 import erjinzhi.xinhao.xinhaolib.linedata.listener.LineDataViewRefreshListener;
 import erjinzhi.xinhao.xinhaolib.linedata.listener.PointDataViewRefreshListener;
 import erjinzhi.xinhao.xinhaolib.view.viewlistener.CharViewDataRefreshListener;
@@ -36,7 +37,7 @@ public abstract class CharLineView extends View implements ViewRefreshListener, 
 
     IScaleLineData mScaleLineData;
 
-    PointData mPointData;
+    ImpPointData mPointData;
 
     ILineData mLineData;
 
@@ -68,7 +69,7 @@ public abstract class CharLineView extends View implements ViewRefreshListener, 
         this.mContext = mContext;
 
         mCharViewData = new CharViewData();
-        mPointData = new PointData();
+        mPointData = mCharViewData.getmPointData();
         mLineData = mCharViewData.getmLineData();
         mCharViewData.setCharViewDataRefreshListener(this);
         mCharViewData.setNotifyDataSetChangedListener(this);
@@ -124,7 +125,7 @@ public abstract class CharLineView extends View implements ViewRefreshListener, 
          *
          */
         //计算刻度线 IScaleLineData
-        mScaleLineData =  mCharViewData.getmIScaleLineData();
+        mScaleLineData = mCharViewData.getmIScaleLineData();
         int mWidth = mScaleLineData.getmWidth();
         int mHeight = mScaleLineData.getmHeight();
 
@@ -137,6 +138,7 @@ public abstract class CharLineView extends View implements ViewRefreshListener, 
         mScaleLineData.setViewRefreshListener(this);
         //开始计算
         mScaleLineData.calculate();
+
 
         /**
          * 计算点
@@ -162,6 +164,12 @@ public abstract class CharLineView extends View implements ViewRefreshListener, 
         mLineData.setLineDataViewRefreshListener(this);
         //开始计算
         mLineData.calculate();
+
+        /**
+         * 等点和线位置计算完毕才能执行该条命令
+         */
+        //计算侧边显示标题的值
+        mScaleLineData.calculateString();
 
     }
 

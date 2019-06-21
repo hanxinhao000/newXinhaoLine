@@ -4,9 +4,11 @@ import java.util.List;
 
 import erjinzhi.xinhao.xinhaolib.databean.listener.NotifyDataSetChangedListener;
 import erjinzhi.xinhao.xinhaolib.linedata.LineData;
+import erjinzhi.xinhao.xinhaolib.linedata.PointData;
 import erjinzhi.xinhao.xinhaolib.linedata.ScaleLineData;
 import erjinzhi.xinhao.xinhaolib.linedata.idata.ILineData;
 import erjinzhi.xinhao.xinhaolib.linedata.idata.IScaleLineData;
+import erjinzhi.xinhao.xinhaolib.linedata.idata.ImpPointData;
 import erjinzhi.xinhao.xinhaolib.view.viewlistener.CharViewDataRefreshListener;
 
 /**
@@ -18,10 +20,23 @@ public class CharViewData {
     private List<LineCharBean> mList;
 
 
-
     private ILineData mLineData;
 
     private IScaleLineData mIScaleLineData;
+
+    private ImpPointData mPointData;
+
+    public ImpPointData getmPointData() {
+        if (mPointData == null) {
+
+            mPointData = new PointData();
+        }
+        return mPointData;
+    }
+
+    public void setmPointData(ImpPointData mPointData) {
+        this.mPointData = mPointData;
+    }
 
     public IScaleLineData getmIScaleLineData() {
         if (mIScaleLineData == null) {

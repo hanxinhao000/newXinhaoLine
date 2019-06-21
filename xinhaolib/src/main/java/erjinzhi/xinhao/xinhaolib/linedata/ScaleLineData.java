@@ -157,6 +157,17 @@ public class ScaleLineData implements IBaseData, IScaleLineData {
 
     }
 
+
+    /**
+     * 计算Text位置
+     */
+    @Override
+    public void calculateString() {
+        //如果有其他需求可在此更改
+
+    }
+
+
     /**
      * 获取计算过后的线（刻度X）坐标
      *
@@ -188,20 +199,42 @@ public class ScaleLineData implements IBaseData, IScaleLineData {
 
 
     /**
-     * 获取刻度线左边的值
+     * 设置刻度线左边的值
      */
 
+    @Override
     public void setScaleLineLifeStringBeans(ArrayList<ScaleLineLifeStringBean> scaleLineLifeStringBeans) {
         ScaleLineLifeStringBeans = scaleLineLifeStringBeans;
     }
 
 
     /**
-     * 获取刻度线底部的值
+     * 设置刻度线底部的值
+     *
      * @param scaleLineBoomStringBeans
      */
-
+    @Override
     public void setScaleLineBoomStringBeans(ArrayList<ScaleLineBoomStringBean> scaleLineBoomStringBeans) {
         this.scaleLineBoomStringBeans = scaleLineBoomStringBeans;
+    }
+
+    /**
+     * 获取左边的一些东西
+     *
+     * @return
+     */
+    @Override
+    public ArrayList<ScaleLineLifeStringBean> getScaleLineLifeStringBeans() {
+        return ScaleLineLifeStringBeans;
+    }
+
+    /**
+     * 获取底部的一些东西
+     *
+     * @return
+     */
+    @Override
+    public ArrayList<ScaleLineBoomStringBean> getScaleLineBoomStringBeans() {
+        return scaleLineBoomStringBeans;
     }
 }
