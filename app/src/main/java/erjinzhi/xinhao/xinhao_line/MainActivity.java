@@ -83,6 +83,9 @@ public class MainActivity extends Activity {
         UIUtils.loge("<<<<" + mList.toString());
 
         charViewData.setLineData(mList);
+
+        float[] upDown = {100, 500};
+        charViewData.setUp2Down(upDown);
         charViewData.build();
 
         refresh.setOnClickListener(new View.OnClickListener() {

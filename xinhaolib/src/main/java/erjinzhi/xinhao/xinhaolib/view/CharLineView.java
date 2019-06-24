@@ -15,10 +15,12 @@ import erjinzhi.xinhao.xinhaolib.databean.listener.NotifyDataSetChangedListener;
 import erjinzhi.xinhao.xinhaolib.linedata.idata.ILineData;
 import erjinzhi.xinhao.xinhaolib.linedata.idata.IRollingLine;
 import erjinzhi.xinhao.xinhaolib.linedata.idata.IScaleLineData;
+import erjinzhi.xinhao.xinhaolib.linedata.idata.IUp2DownLineData;
 import erjinzhi.xinhao.xinhaolib.linedata.idata.ImpPointData;
 import erjinzhi.xinhao.xinhaolib.linedata.listener.LineDataViewRefreshListener;
 import erjinzhi.xinhao.xinhaolib.linedata.listener.PointDataViewRefreshListener;
 import erjinzhi.xinhao.xinhaolib.linedata.listener.RollingLineRefreshListener;
+import erjinzhi.xinhao.xinhaolib.linedata.listener.Up2DownLineRefreshListener;
 import erjinzhi.xinhao.xinhaolib.view.viewlistener.CharViewDataRefreshListener;
 import erjinzhi.xinhao.xinhaolib.view.viewlistener.ViewRefreshListener;
 
@@ -26,7 +28,7 @@ import erjinzhi.xinhao.xinhaolib.view.viewlistener.ViewRefreshListener;
  * View 底层,这是一款轻量级的线图 作者XINHAO_HAN
  */
 
-public abstract class CharLineView extends View implements ViewRefreshListener, CharViewDataRefreshListener, PointDataViewRefreshListener, LineDataViewRefreshListener, NotifyDataSetChangedListener, RollingLineRefreshListener {
+public abstract class CharLineView extends View implements ViewRefreshListener, CharViewDataRefreshListener, PointDataViewRefreshListener, LineDataViewRefreshListener, NotifyDataSetChangedListener, RollingLineRefreshListener, Up2DownLineRefreshListener {
 
     private Context mContext;
 
@@ -41,6 +43,8 @@ public abstract class CharLineView extends View implements ViewRefreshListener, 
     ILineData mLineData;
 
     IRollingLine mIRollingLine;
+
+    IUp2DownLineData mIUp2DownLineData;
 
     private CharViewData mCharViewData;
 
@@ -73,6 +77,7 @@ public abstract class CharLineView extends View implements ViewRefreshListener, 
         mPointData = mCharViewData.getmPointData();
         mLineData = mCharViewData.getmLineData();
         mIRollingLine = mCharViewData.getmIRollingLine();
+        mIUp2DownLineData = mCharViewData.getIUp2DownLineData();
         mCharViewData.setCharViewDataRefreshListener(this);
         mCharViewData.setNotifyDataSetChangedListener(this);
     }
@@ -197,6 +202,26 @@ public abstract class CharLineView extends View implements ViewRefreshListener, 
         mIRollingLine.setWidth(getViewWidth());
 
 
+        /**
+         *
+         * 处理高低线 mIUp2DownLineData
+         *
+         */
+        mIUp2DownLineData.setAverage(mPointData.getAverage());
+
+        mIUp2DownLineData.setShowUp2DownLine(mCharViewData.isShowUp2DownLine());
+
+        mIUp2DownLineData.setUp2Down(mCharViewData.getUp2Down());
+
+        mIUp2DownLineData.setViewPointCoordinatesList(mPointData.getViewPointCoordinatesList());
+
+        mIUp2DownLineData.setUp2DownLineRefreshListener(this);
+
+        mIUp2DownLineData.setScaleLineY(mScaleLineData.getmY());
+
+        mIUp2DownLineData.calculate();
+
+
     }
 
 
@@ -215,7 +240,17 @@ public abstract class CharLineView extends View implements ViewRefreshListener, 
             pointIsLineDraw(canvas);
         }
 
+        //画高低线
+        up2DownDraw(canvas);
+
     }
+
+    /**
+     * 画高低线
+     */
+
+    public abstract void up2DownDraw(Canvas canvas);
+
 
     /**
      * 画刻度线
@@ -294,6 +329,16 @@ public abstract class CharLineView extends View implements ViewRefreshListener, 
 
     @Override
     public void rollingRefreshLineView(float x) {
+        invalidate();
+    }
+
+    @Override
+    public float crossLine() {
+        return 0;
+    }
+
+    @Override
+    public void up2DownLineRefresh() {
         invalidate();
     }
 }

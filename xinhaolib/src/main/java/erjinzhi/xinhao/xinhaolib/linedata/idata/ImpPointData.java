@@ -50,4 +50,7 @@ public interface ImpPointData {
     public void setScaleWidth(int mScaleWidth);
     //计算刻度线
     public void calculateBoomText();
+
+    //获得平均值
+    public float getAverage();
 }

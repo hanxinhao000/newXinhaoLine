@@ -86,6 +86,10 @@ public class PointData implements IBaseData, IPointData, DataNotifyDataSetChange
 
     }
 
+    public float getAverage() {
+        return average;
+    }
+
     //设置View高度
     @Override
     public void setViewHeight(int mHeight) {

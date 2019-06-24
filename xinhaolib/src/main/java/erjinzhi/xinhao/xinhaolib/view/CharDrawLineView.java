@@ -4,8 +4,10 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import erjinzhi.xinhao.xinhaolib.databean.LineCharViewData;
@@ -29,6 +31,32 @@ public class CharDrawLineView extends CharLineView implements IPointData, IScale
 
     public CharDrawLineView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+    }
+
+    /**
+     * 画高低线
+     *
+     * @param canvas
+     */
+
+    @Override
+    public void up2DownDraw(Canvas canvas) {
+
+        //底线
+        float[] showDownLineView = mIUp2DownLineData.getShowDownLineView();
+
+        //高线
+        float[] showUpLineView = mIUp2DownLineData.getShowUpLineView();
+
+        //画高线
+        canvas.drawLine(showDownLineView[0],showDownLineView[1],showDownLineView[2],showDownLineView[3],mIUp2DownLineData.getPaint());
+
+        //画底线
+        canvas.drawLine(showUpLineView[0],showUpLineView[1],showUpLineView[2],showUpLineView[3],mIUp2DownLineData.getPaint());
+
+
+        Log.e("高低线坐标", "高线: " + Arrays.toString(showUpLineView));
+
     }
 
 

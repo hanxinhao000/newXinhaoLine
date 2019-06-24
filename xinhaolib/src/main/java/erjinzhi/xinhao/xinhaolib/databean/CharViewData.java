@@ -7,9 +7,11 @@ import erjinzhi.xinhao.xinhaolib.linedata.LineData;
 import erjinzhi.xinhao.xinhaolib.linedata.PointData;
 import erjinzhi.xinhao.xinhaolib.linedata.RollingLine;
 import erjinzhi.xinhao.xinhaolib.linedata.ScaleLineData;
+import erjinzhi.xinhao.xinhaolib.linedata.Up2DownLineData;
 import erjinzhi.xinhao.xinhaolib.linedata.idata.ILineData;
 import erjinzhi.xinhao.xinhaolib.linedata.idata.IRollingLine;
 import erjinzhi.xinhao.xinhaolib.linedata.idata.IScaleLineData;
+import erjinzhi.xinhao.xinhaolib.linedata.idata.IUp2DownLineData;
 import erjinzhi.xinhao.xinhaolib.linedata.idata.ImpPointData;
 import erjinzhi.xinhao.xinhaolib.view.viewlistener.CharViewDataRefreshListener;
 
@@ -36,6 +38,48 @@ public class CharViewData {
             mPointData = new PointData();
         }
         return mPointData;
+    }
+
+    //高低线
+    private IUp2DownLineData mIUp2DownLineData;
+
+
+    public IUp2DownLineData getIUp2DownLineData() {
+        if (mIUp2DownLineData == null) {
+            mIUp2DownLineData = new Up2DownLineData();
+        }
+        return mIUp2DownLineData;
+    }
+
+    public void setIUp2DownLineData(IUp2DownLineData mIUp2DownLineData) {
+        this.mIUp2DownLineData = mIUp2DownLineData;
+    }
+
+    //高低线
+    private float[] up2Down = new float[2];
+
+    //是否显示高低线
+    private boolean isShowUp2DownLine = true;
+
+    public float[] getUp2Down() {
+        return up2Down;
+    }
+
+    public boolean isShowUp2DownLine() {
+        return isShowUp2DownLine;
+    }
+
+    public void setShowUp2DownLine(boolean showUp2DownLine) {
+        isShowUp2DownLine = showUp2DownLine;
+    }
+
+    /**
+     * 高低线
+     *
+     * @param up2Down
+     */
+    public void setUp2Down(float[] up2Down) {
+        this.up2Down = up2Down;
     }
 
     public void setmPointData(ImpPointData mPointData) {
