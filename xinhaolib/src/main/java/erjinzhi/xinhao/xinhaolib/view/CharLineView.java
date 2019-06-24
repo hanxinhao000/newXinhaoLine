@@ -155,6 +155,8 @@ public abstract class CharLineView extends View implements ViewRefreshListener, 
         mPointData.setScaleWidth(mScaleLineData.getScaleWidth());
         //开始计算
         mPointData.calculate();
+        //将算好的刻度线传入刻度线类
+        mScaleLineData.setScaleLineLifeStringBeans(mPointData.getScaleLineLifeStringBeans());
 
 
         /**

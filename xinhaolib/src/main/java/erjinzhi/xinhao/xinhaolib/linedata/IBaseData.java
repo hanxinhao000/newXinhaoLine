@@ -37,6 +37,8 @@ public interface IBaseData {
      */
      static final int RIGHT_DISTANCE = 40;
 
+     //距离
+     int SCALE = LEFT_DISTANCE - 40;
 
 
 

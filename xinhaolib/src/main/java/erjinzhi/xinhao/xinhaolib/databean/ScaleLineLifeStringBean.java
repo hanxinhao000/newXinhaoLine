@@ -5,11 +5,11 @@ public class ScaleLineLifeStringBean {
 
     private int color;
 
-    private int mX;
+    private float mX;
 
-    private int mY;
+    private float mY;
 
-    public int getmX() {
+    public float getmX() {
         return mX;
     }
 
@@ -17,11 +17,11 @@ public class ScaleLineLifeStringBean {
         this.mX = mX;
     }
 
-    public int getmY() {
+    public float getmY() {
         return mY;
     }
 
-    public void setmY(int mY) {
+    public void setmY(float mY) {
         this.mY = mY;
     }
 

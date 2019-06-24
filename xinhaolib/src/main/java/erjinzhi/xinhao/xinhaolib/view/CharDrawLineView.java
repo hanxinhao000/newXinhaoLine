@@ -6,14 +6,17 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import erjinzhi.xinhao.xinhaolib.databean.LineCharViewData;
 import erjinzhi.xinhao.xinhaolib.databean.LineViewData;
+import erjinzhi.xinhao.xinhaolib.databean.ScaleLineLifeStringBean;
 import erjinzhi.xinhao.xinhaolib.linedata.IPointData;
+import erjinzhi.xinhao.xinhaolib.linedata.listener.IScaleLine;
 import erjinzhi.xinhao.xinhaolib.utils.UIUtils;
 
-public class CharDrawLineView extends CharLineView implements IPointData {
+public class CharDrawLineView extends CharLineView implements IPointData, IScaleLine {
 
     public CharDrawLineView(Context context) {
         super(context);
@@ -50,6 +53,36 @@ public class CharDrawLineView extends CharLineView implements IPointData {
          * Y线
          */
         canvas.drawLine(y[0], y[1], y[2], y[3], paint);
+
+        /**
+         * 刻度线的数字
+         *
+         */
+        ArrayList<ScaleLineLifeStringBean> scaleLineLifeStringBeans = mScaleLineData.getScaleLineLifeStringBeans();
+        if (scaleLineLifeStringBeans != null) {
+
+            for (int i = 0; i < scaleLineLifeStringBeans.size(); i++) {
+
+                canvas.drawText(
+                        scaleLineLifeStringBeans.get(i).getText(),
+                        scaleLineLifeStringBeans.get(i).getmX(),
+                        scaleLineLifeStringBeans.get(i).getmY(),
+                        mScaleLineData.getmPaint()
+                );
+
+                canvas.drawLine(
+                        x[0],
+                        scaleLineLifeStringBeans.get(i).getmY(),
+                        x[0] + NUMBER_OF_SCALE_LINES_LINEG,
+                        scaleLineLifeStringBeans.get(i).getmY(),
+                        mScaleLineData.getmPaint()
+
+                );
+
+
+            }
+
+        }
 
     }
 

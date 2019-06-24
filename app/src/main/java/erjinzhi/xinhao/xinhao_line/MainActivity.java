@@ -33,7 +33,7 @@ public class MainActivity extends Activity {
         mList = new ArrayList<>();
         random = new Random();
 
-        for (int i = 1985; i <= 2000; i++) {
+        for (int i = 0; i <= 10; i++) {
 
             int i1 = random.nextInt(600);
             LineCharBean l = new LineCharBean();

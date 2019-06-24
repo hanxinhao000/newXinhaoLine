@@ -4,6 +4,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import erjinzhi.xinhao.xinhaolib.databean.LineCharBean;
@@ -12,13 +14,14 @@ import erjinzhi.xinhao.xinhaolib.databean.ScaleLineBoomStringBean;
 import erjinzhi.xinhao.xinhaolib.databean.ScaleLineLifeStringBean;
 import erjinzhi.xinhao.xinhaolib.databean.listener.DataNotifyDataSetChangedListener;
 import erjinzhi.xinhao.xinhaolib.linedata.idata.ImpPointData;
+import erjinzhi.xinhao.xinhaolib.linedata.listener.IScaleLine;
 import erjinzhi.xinhao.xinhaolib.linedata.listener.PointDataViewRefreshListener;
 import erjinzhi.xinhao.xinhaolib.utils.UIUtils;
 
 /**
  * 专门处理点的一个类
  */
-public class PointData implements IBaseData, IPointData, DataNotifyDataSetChangedListener, ImpPointData {
+public class PointData implements IBaseData, IPointData, DataNotifyDataSetChangedListener, ImpPointData, IScaleLine {
 
 
     /**
@@ -79,6 +82,8 @@ public class PointData implements IBaseData, IPointData, DataNotifyDataSetChange
         //吧 Y轴的信息算出来
         mXScale = new XScale(mList.size());
 
+        mPaint.setTextSize(20);
+
     }
 
     //设置View高度
@@ -112,7 +117,7 @@ public class PointData implements IBaseData, IPointData, DataNotifyDataSetChange
         //高度已计算完毕，开始计算宽度
         pointWidth();
         //计算左边Text的位置
-        calculateLifeText();
+        calculateLifeText(max, mid);
         //通知视图说数据全部已算好
         if (mPointDataViewRefreshListener != null) {
             mPointDataViewRefreshListener.refreshPointDataView();
@@ -136,9 +141,68 @@ public class PointData implements IBaseData, IPointData, DataNotifyDataSetChange
 
     }
 
-    private void calculateLifeText() {
+    private void calculateLifeText(int max, int mid) {
         //刻度线分为10个
-        //todo 计算左边刻度线，以显示左边刻度线的Text,现在左边线的高度都传进来了了
+        int temp = (mScaleWidth / NUMBER_OF_SCALE_LINES);
+
+        if (mScaleLineLifeStringBeans == null) {
+            mScaleLineLifeStringBeans = new ArrayList<>();
+        } else {
+            //清空刻度线
+            mScaleLineLifeStringBeans.clear();
+        }
+
+        //平均刻度线
+        int t = absoluteValue(max - mid) / (NUMBER_OF_SCALE_LINES);
+
+
+        for (int i = 0; i <= NUMBER_OF_SCALE_LINES; i++) {
+
+
+            ScaleLineLifeStringBean scaleLineLifeStringBean = new ScaleLineLifeStringBean();
+
+            scaleLineLifeStringBean.setmX(SCALE);
+
+            // scaleLineLifeStringBean.setmY((temp * (NUMBER_OF_SCALE_LINES - i)) + (TOP_DISTANCE + POINT_INTERVAL));
+/*
+            int temp_s = temp * i;
+
+            int tempHeight = mHeight;
+
+            tempHeight -= (BOTTOM_DISTANCE + TOP_DISTANCE);
+
+            temp_s = tempHeight - temp_s;
+
+            //减去顶部的距离
+            temp_s = temp_s + TOP_DISTANCE;
+            //减去padding的距离
+            temp_s = temp_s - POINT_INTERVAL;*/
+
+            //获取最大点位置
+
+            float maxIndex = getMaxIndex();
+
+            //获取最小点位置
+            float minIndex = getMinIndex();
+
+            //再除以N份
+            float temp_s = (maxIndex - minIndex) / (NUMBER_OF_SCALE_LINES);
+
+            //获取底部位置
+            int boom = mHeight;
+
+            boom -= (BOTTOM_DISTANCE + POINT_INTERVAL);
+
+
+            scaleLineLifeStringBean.setmY(boom + (temp_s * i));
+            // scaleLineLifeStringBean.setmY((int) (mid + ((t * (NUMBER_OF_SCALE_LINES - i)) * average))+ TOP_DISTANCE + POINT_INTERVAL - 4);
+            scaleLineLifeStringBean.setText((mid + (t * i)) + "");
+            //scaleLineLifeStringBean.setText(mid + ((t * (i - 1)) * average) + "");
+
+            mScaleLineLifeStringBeans.add(scaleLineLifeStringBean);
+        }
+
+        //  Collections.reverse(mScaleLineLifeStringBeans);
 
 
     }
@@ -224,6 +288,51 @@ public class PointData implements IBaseData, IPointData, DataNotifyDataSetChange
 
     }
 
+    //获取最大点位置
+    private float getMaxIndex() {
+
+        int temp = mViewPointCoordinatesList.get(0).getData();
+
+        float index = 0;
+
+        for (int i = 0; i < mViewPointCoordinatesList.size(); i++) {
+
+            if (mViewPointCoordinatesList.get(i).getData() > temp) {
+                temp = mViewPointCoordinatesList.get(i).getData();
+                index = mViewPointCoordinatesList.get(i).getViewDataY();
+            }
+
+
+        }
+
+
+        return index;
+
+    }
+
+    //获取最小点位置
+
+    //获取最大点位置
+    private float getMinIndex() {
+
+        int temp = mViewPointCoordinatesList.get(0).getData();
+
+        float index = 0;
+
+        for (int i = 0; i < mViewPointCoordinatesList.size(); i++) {
+
+            if (mViewPointCoordinatesList.get(i).getData() < temp) {
+                temp = mViewPointCoordinatesList.get(i).getData();
+                index = mViewPointCoordinatesList.get(i).getViewDataY();
+            }
+
+
+        }
+
+
+        return index;
+
+    }
 
     /**
      * 计算每个点的平均值

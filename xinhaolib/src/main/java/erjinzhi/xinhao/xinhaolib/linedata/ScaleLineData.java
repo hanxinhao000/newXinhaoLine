@@ -226,6 +226,13 @@ public class ScaleLineData implements IBaseData, IScaleLineData {
     @Override
     public void setScaleLineBoomStringBeans(ArrayList<ScaleLineBoomStringBean> scaleLineBoomStringBeans) {
         this.scaleLineBoomStringBeans = scaleLineBoomStringBeans;
+        /**
+         * 通知View该刷新啦
+         *
+         */
+        if (mViewRefreshListener != null) {
+            mViewRefreshListener.refresh();
+        }
     }
 
     /**
