@@ -129,6 +129,10 @@ public class Up2DownLineData implements IUp2DownLineData, IBaseData, IPointData 
         mPaint = new Paint();
 
         mPaint.setColor(Color.parseColor("#ad0015"));
+        mPaint.setAntiAlias(true);
+        mPaint.setStrokeWidth(4);
+        mPaint.setAlpha(50);
+
 
     }
 

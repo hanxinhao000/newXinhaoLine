@@ -2,6 +2,7 @@ package erjinzhi.xinhao.xinhaolib.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -49,10 +50,22 @@ public class CharDrawLineView extends CharLineView implements IPointData, IScale
         float[] showUpLineView = mIUp2DownLineData.getShowUpLineView();
 
         //画高线
-        canvas.drawLine(showDownLineView[0],showDownLineView[1],showDownLineView[2],showDownLineView[3],mIUp2DownLineData.getPaint());
+        canvas.drawLine(
+                showDownLineView[0]+ SLIDING_X,
+                showDownLineView[1],
+                showDownLineView[2]+ SLIDING_X,
+                showDownLineView[3],
+                mIUp2DownLineData.getPaint()
+        );
 
         //画底线
-        canvas.drawLine(showUpLineView[0],showUpLineView[1],showUpLineView[2],showUpLineView[3],mIUp2DownLineData.getPaint());
+        canvas.drawLine(
+                showUpLineView[0]+ SLIDING_X,
+                showUpLineView[1],
+                showUpLineView[2]+ SLIDING_X,
+                showUpLineView[3],
+                mIUp2DownLineData.getPaint()
+        );
 
 
         Log.e("高低线坐标", "高线: " + Arrays.toString(showUpLineView));
@@ -89,14 +102,16 @@ public class CharDrawLineView extends CharLineView implements IPointData, IScale
          */
         ArrayList<ScaleLineLifeStringBean> scaleLineLifeStringBeans = mScaleLineData.getScaleLineLifeStringBeans();
         if (scaleLineLifeStringBeans != null) {
-
+            Paint paint1 = mScaleLineData.getmPaint();
+            paint1.setColor(Color.parseColor("#35ADA7"));
+            paint1.setTextSize(30);
             for (int i = 0; i < scaleLineLifeStringBeans.size(); i++) {
 
                 canvas.drawText(
                         scaleLineLifeStringBeans.get(i).getText(),
                         scaleLineLifeStringBeans.get(i).getmX() + SLIDING_X,
                         scaleLineLifeStringBeans.get(i).getmY(),
-                        mScaleLineData.getmPaint()
+                        paint1
                 );
 
                 canvas.drawLine(
@@ -104,7 +119,7 @@ public class CharDrawLineView extends CharLineView implements IPointData, IScale
                         scaleLineLifeStringBeans.get(i).getmY(),
                         x[0] + NUMBER_OF_SCALE_LINES_LINEG + SLIDING_X,
                         scaleLineLifeStringBeans.get(i).getmY(),
-                        mScaleLineData.getmPaint()
+                        paint1
 
                 );
 
@@ -121,13 +136,15 @@ public class CharDrawLineView extends CharLineView implements IPointData, IScale
         ArrayList<ScaleLineBoomStringBean> scaleLineBoomStringBeans = mScaleLineData.getScaleLineBoomStringBeans();
         if (scaleLineBoomStringBeans != null) {
 
+            Paint paint1 = mScaleLineData.getmPaint();
+            paint1.setColor(Color.parseColor("#35ADA7"));
             for (int i = 0; i < scaleLineBoomStringBeans.size(); i++) {
 
                 canvas.drawText(
                         scaleLineBoomStringBeans.get(i).getText(),
                         scaleLineBoomStringBeans.get(i).getmX() + SLIDING_X,
                         scaleLineBoomStringBeans.get(i).getmY(),
-                        mScaleLineData.getmPaint()
+                        paint1
                 );
 
                 canvas.drawLine(
@@ -135,7 +152,7 @@ public class CharDrawLineView extends CharLineView implements IPointData, IScale
                         scaleLineBoomStringBeans.get(i).getLineStartY(),
                         scaleLineBoomStringBeans.get(i).getLineEndX() + SLIDING_X,
                         scaleLineBoomStringBeans.get(i).getLineEndY(),
-                        mScaleLineData.getmPaint()
+                        paint1
 
                 );
 
@@ -154,18 +171,20 @@ public class CharDrawLineView extends CharLineView implements IPointData, IScale
     public void pointDraw(Canvas canvas) {
 
         List<LineCharViewData> viewPointCoordinatesList = mPointData.getViewPointCoordinatesList();
-
+        Paint paint = mPointData.getPaint();
         for (int i = 0; i < viewPointCoordinatesList.size(); i++) {
-
+            paint.setColor(Color.parseColor("#35ADA7"));
             canvas.drawCircle(
                     viewPointCoordinatesList.get(i).getViewDataX() + SLIDING_X,
                     viewPointCoordinatesList.get(i).getViewDataY(),
                     POINT_SIZE,
                     mPointData.getPaint());
+
+            paint.setColor(Color.parseColor("#adadad"));
             canvas.drawText("" + viewPointCoordinatesList.get(i).getData(),
                     viewPointCoordinatesList.get(i).getViewDataX() + 15 + SLIDING_X,
                     viewPointCoordinatesList.get(i).getViewDataY(),
-                    mPointData.getPaint()
+                    paint
 
 
             );

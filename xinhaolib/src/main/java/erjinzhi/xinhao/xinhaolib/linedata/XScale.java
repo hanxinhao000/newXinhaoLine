@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class XScale {
 
     //默认间隔
-    public static final int X_SCALE = 50;
+    public static final int X_SCALE = 100;
 
     //要保存的坐标
 

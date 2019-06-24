@@ -21,7 +21,7 @@ public interface IBaseData {
      * 默认与左边View的距离
      *
      */
-     static final int LEFT_DISTANCE = 50;
+     static final int LEFT_DISTANCE = 80;
 
     /**
      *
@@ -38,7 +38,7 @@ public interface IBaseData {
      static final int RIGHT_DISTANCE = 40;
 
      //距离
-     int SCALE = LEFT_DISTANCE - 40;
+     int SCALE = LEFT_DISTANCE - 70;
 
 
 

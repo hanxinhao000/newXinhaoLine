@@ -59,8 +59,9 @@ public class LineData implements ILineData,DataNotifyDataSetChangedListener {
     //初始化画笔
     private void initPaint() {
         mPaint = new Paint();
-        mPaint.setColor(Color.parseColor("#ff00ff"));
-        mPaint.setStrokeWidth(4);
+        mPaint.setColor(Color.parseColor("#35ADA7"));
+        mPaint.setStrokeWidth(6);
+        mPaint.setAntiAlias(true);
 
     }
 

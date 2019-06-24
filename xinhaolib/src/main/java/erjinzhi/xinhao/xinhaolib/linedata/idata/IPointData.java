@@ -13,7 +13,7 @@ public interface IPointData {
      * 点的大小
      *
      */
-    int POINT_SIZE = 5;
+    int POINT_SIZE = 10;
 
 
 

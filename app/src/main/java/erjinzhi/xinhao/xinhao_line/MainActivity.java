@@ -38,7 +38,7 @@ public class MainActivity extends Activity {
             int i1 = random.nextInt(600);
             LineCharBean l = new LineCharBean();
             //l.setTextLife("哈哈哈");
-            l.setTextBoom("哈哈哈");
+            l.setTextBoom("002");
             //测试有负数出现
             /*if (i1 < 100) {
 

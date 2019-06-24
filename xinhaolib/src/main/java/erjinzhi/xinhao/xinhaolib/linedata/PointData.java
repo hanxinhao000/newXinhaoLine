@@ -84,6 +84,7 @@ public class PointData implements IBaseData, IPointData, DataNotifyDataSetChange
 
         mPaint.setTextSize(20);
 
+
     }
 
     public float getAverage() {
@@ -217,7 +218,7 @@ public class PointData implements IBaseData, IPointData, DataNotifyDataSetChange
 
             scaleLineBoomStringBean.setText(mList.get(i).getTextBoom());
 
-            int temp = (mHeight - BOTTOM_DISTANCE + BOOM_TEXT_DISTANCE);
+            int temp = (mHeight - BOTTOM_DISTANCE + BOOM_TEXT_DISTANCE + 20);
 
             int temp_x = mXScale.getXScales().get(i) + LEFT_DISTANCE + POINT_INTERVAL;
 
@@ -270,9 +271,10 @@ public class PointData implements IBaseData, IPointData, DataNotifyDataSetChange
     //初始化画笔
     private void initPaint() {
 
-        mPaint.setColor(Color.RED);
+        mPaint.setColor(Color.parseColor("#35ADA7"));
         mPaint.setStrokeWidth(20);
-        mPaint.setTextSize(20);
+        mPaint.setAntiAlias(true);
+        mPaint.setTextSize(30);
     }
 
     //计算点的宽度

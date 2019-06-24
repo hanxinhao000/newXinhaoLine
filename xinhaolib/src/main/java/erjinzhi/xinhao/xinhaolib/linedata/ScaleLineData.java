@@ -84,8 +84,9 @@ public class ScaleLineData implements IBaseData, IScaleLineData {
     private void initPaint() {
 
         mPaint = new Paint();
-        mPaint.setColor(Color.GREEN);
+        mPaint.setColor(Color.parseColor("#35ADA7"));
         mPaint.setStrokeWidth(STROKE_WIDTH);
+        mPaint.setAntiAlias(true);
 
     }
 
