@@ -4,9 +4,12 @@ import android.graphics.Color;
 import android.graphics.Paint;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import erjinzhi.xinhao.xinhaolib.databean.LineCharViewData;
 import erjinzhi.xinhao.xinhaolib.databean.ScaleLineLifeStringBean;
 import erjinzhi.xinhao.xinhaolib.databean.ScaleLineBoomStringBean;
+import erjinzhi.xinhao.xinhaolib.linedata.idata.IBaseData;
 import erjinzhi.xinhao.xinhaolib.linedata.idata.IScaleLineData;
 import erjinzhi.xinhao.xinhaolib.view.viewlistener.ViewRefreshListener;
 
@@ -42,6 +45,12 @@ public class ScaleLineData implements IBaseData, IScaleLineData {
      * 线的宽度
      */
     private int STROKE_WIDTH = 5;
+
+    /**
+     * 获取数据总和
+     */
+
+    private int mSize;
 
 
     /**
@@ -129,6 +138,12 @@ public class ScaleLineData implements IBaseData, IScaleLineData {
         return mHeight - BOTTOM_DISTANCE - TOP_DISTANCE;
     }
 
+    @Override
+    public void setDataSize(int size) {
+        mSize = size;
+    }
+
+
     /**
      * 计算线的宽高度
      */
@@ -154,7 +169,14 @@ public class ScaleLineData implements IBaseData, IScaleLineData {
         mY[0] = LEFT_DISTANCE - (STROKE_WIDTH / 2);
         mY[1] = midHeight;
         //右边Y轴确定
-        mY[2] = midRight;
+        if((mSize * XScale.X_SCALE) > mWidth){
+            //如果大于屏幕边缘
+            mY[2] = (mSize * XScale.X_SCALE) + XScale.X_SCALE;
+        }else{
+            //如果小于屏幕边缘
+            mY[2] = midRight;
+        }
+
         mY[3] = midHeight;
 
         /**
@@ -254,4 +276,6 @@ public class ScaleLineData implements IBaseData, IScaleLineData {
     public ArrayList<ScaleLineBoomStringBean> getScaleLineBoomStringBeans() {
         return scaleLineBoomStringBeans;
     }
+
+
 }

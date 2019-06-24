@@ -5,23 +5,65 @@ public class ScaleLineBoomStringBean {
 
     private int color;
 
-    private int mX;
+    private float mX;
 
-    private int mY;
+    private float mY;
 
-    public int getmX() {
+    private float lineStartX;
+
+    private float lineStartY;
+
+    private float lineEndX;
+
+    private float lineEndY;
+
+    public float getLineStartX() {
+        return lineStartX;
+    }
+
+    public void setLineStartX(float lineStartX) {
+        this.lineStartX = lineStartX;
+    }
+
+    public float getLineStartY() {
+        return lineStartY;
+    }
+
+    public void setLineStartY(float lineStartY) {
+        this.lineStartY = lineStartY;
+    }
+
+    public float getLineEndX() {
+        return lineEndX;
+    }
+
+    public void setLineEndX(float lineEndX) {
+        this.lineEndX = lineEndX;
+    }
+
+    public float getLineEndY() {
+        return lineEndY;
+    }
+
+    public void setLineEndY(float lineEndY) {
+        this.lineEndY = lineEndY;
+    }
+
+
+
+    public float getmX() {
         return mX;
     }
 
-    public void setmX(int mX) {
+    public void setmX(float mX) {
         this.mX = mX;
     }
 
-    public int getmY() {
+    public float getmY() {
         return mY;
     }
 
-    public void setmY(int mY) {
+    public void setmY(float mY) {
         this.mY = mY;
     }
 

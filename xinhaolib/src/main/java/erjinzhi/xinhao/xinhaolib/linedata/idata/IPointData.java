@@ -1,4 +1,4 @@
-package erjinzhi.xinhao.xinhaolib.linedata;
+package erjinzhi.xinhao.xinhaolib.linedata.idata;
 
 public interface IPointData {
 
@@ -14,5 +14,7 @@ public interface IPointData {
      *
      */
     int POINT_SIZE = 5;
+
+
 
 }

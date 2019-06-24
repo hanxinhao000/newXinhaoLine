@@ -4,8 +4,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import erjinzhi.xinhao.xinhaolib.databean.LineCharBean;
@@ -13,6 +11,8 @@ import erjinzhi.xinhao.xinhaolib.databean.LineCharViewData;
 import erjinzhi.xinhao.xinhaolib.databean.ScaleLineBoomStringBean;
 import erjinzhi.xinhao.xinhaolib.databean.ScaleLineLifeStringBean;
 import erjinzhi.xinhao.xinhaolib.databean.listener.DataNotifyDataSetChangedListener;
+import erjinzhi.xinhao.xinhaolib.linedata.idata.IBaseData;
+import erjinzhi.xinhao.xinhaolib.linedata.idata.IPointData;
 import erjinzhi.xinhao.xinhaolib.linedata.idata.ImpPointData;
 import erjinzhi.xinhao.xinhaolib.linedata.listener.IScaleLine;
 import erjinzhi.xinhao.xinhaolib.linedata.listener.PointDataViewRefreshListener;
@@ -21,7 +21,7 @@ import erjinzhi.xinhao.xinhaolib.utils.UIUtils;
 /**
  * 专门处理点的一个类
  */
-public class PointData implements IBaseData, IPointData, DataNotifyDataSetChangedListener, ImpPointData, IScaleLine {
+public class PointData implements IBaseData, IPointData, DataNotifyDataSetChangedListener, ImpPointData, IScaleLine, ILineData {
 
 
     /**
@@ -118,6 +118,8 @@ public class PointData implements IBaseData, IPointData, DataNotifyDataSetChange
         pointWidth();
         //计算左边Text的位置
         calculateLifeText(max, mid);
+        //计算底部Text的位置
+        calculateBoomText();
         //通知视图说数据全部已算好
         if (mPointDataViewRefreshListener != null) {
             mPointDataViewRefreshListener.refreshPointDataView();
@@ -141,6 +143,12 @@ public class PointData implements IBaseData, IPointData, DataNotifyDataSetChange
 
     }
 
+    /**
+     * 计算刻度线(左边)
+     *
+     * @param max
+     * @param mid
+     */
     private void calculateLifeText(int max, int mid) {
         //刻度线分为10个
         int temp = (mScaleWidth / NUMBER_OF_SCALE_LINES);
@@ -163,20 +171,6 @@ public class PointData implements IBaseData, IPointData, DataNotifyDataSetChange
 
             scaleLineLifeStringBean.setmX(SCALE);
 
-            // scaleLineLifeStringBean.setmY((temp * (NUMBER_OF_SCALE_LINES - i)) + (TOP_DISTANCE + POINT_INTERVAL));
-/*
-            int temp_s = temp * i;
-
-            int tempHeight = mHeight;
-
-            tempHeight -= (BOTTOM_DISTANCE + TOP_DISTANCE);
-
-            temp_s = tempHeight - temp_s;
-
-            //减去顶部的距离
-            temp_s = temp_s + TOP_DISTANCE;
-            //减去padding的距离
-            temp_s = temp_s - POINT_INTERVAL;*/
 
             //获取最大点位置
 
@@ -193,16 +187,69 @@ public class PointData implements IBaseData, IPointData, DataNotifyDataSetChange
 
             boom -= (BOTTOM_DISTANCE + POINT_INTERVAL);
 
-
             scaleLineLifeStringBean.setmY(boom + (temp_s * i));
-            // scaleLineLifeStringBean.setmY((int) (mid + ((t * (NUMBER_OF_SCALE_LINES - i)) * average))+ TOP_DISTANCE + POINT_INTERVAL - 4);
+
             scaleLineLifeStringBean.setText((mid + (t * i)) + "");
-            //scaleLineLifeStringBean.setText(mid + ((t * (i - 1)) * average) + "");
 
             mScaleLineLifeStringBeans.add(scaleLineLifeStringBean);
         }
 
-        //  Collections.reverse(mScaleLineLifeStringBeans);
+
+    }
+
+    //计算刻度线(底部)
+    @Override
+    public void calculateBoomText() {
+
+        //整理数据
+        if (scaleLineBoomStringBeans == null) {
+            scaleLineBoomStringBeans = new ArrayList<>();
+        }
+
+
+        //将字符串传入，并计算坐标
+        for (int i = 0; i < mList.size(); i++) {
+            ScaleLineBoomStringBean scaleLineBoomStringBean = new ScaleLineBoomStringBean();
+
+            scaleLineBoomStringBean.setText(mList.get(i).getTextBoom());
+
+            int temp = (mHeight - BOTTOM_DISTANCE + BOOM_TEXT_DISTANCE);
+
+            int temp_x = mXScale.getXScales().get(i) + LEFT_DISTANCE + POINT_INTERVAL;
+
+            scaleLineBoomStringBean.setmX(temp_x);
+
+            scaleLineBoomStringBean.setmY(temp);
+
+            //计算线的坐标X startX
+
+            int startX = temp_x;
+
+            //计算线的坐标Y startY
+
+            int startY = mHeight - BOTTOM_DISTANCE;
+
+            //计算线的坐标X endX
+
+            int endX = temp_x;
+
+            //计算线的坐标Y endY
+
+            int endY = mHeight - BOTTOM_DISTANCE - NUMBER_OF_SCALE_LINES_LINEG;
+
+
+            scaleLineBoomStringBean.setLineStartX(startX);
+
+            scaleLineBoomStringBean.setLineStartY(startY);
+
+            scaleLineBoomStringBean.setLineEndX(endX);
+
+            scaleLineBoomStringBean.setLineEndY(endY);
+
+            scaleLineBoomStringBeans.add(scaleLineBoomStringBean);
+
+
+        }
 
 
     }
@@ -462,6 +509,7 @@ public class PointData implements IBaseData, IPointData, DataNotifyDataSetChange
      */
     @Override
     public ArrayList<ScaleLineLifeStringBean> getScaleLineLifeStringBeans() {
+
         return mScaleLineLifeStringBeans;
     }
 
@@ -472,6 +520,8 @@ public class PointData implements IBaseData, IPointData, DataNotifyDataSetChange
      */
     @Override
     public ArrayList<ScaleLineBoomStringBean> getScaleLineBoomStringBeans() {
+
+
         return scaleLineBoomStringBeans;
     }
 }

@@ -33,10 +33,12 @@ public class MainActivity extends Activity {
         mList = new ArrayList<>();
         random = new Random();
 
-        for (int i = 0; i <= 10; i++) {
+        for (int i = 0; i <= 60; i++) {
 
             int i1 = random.nextInt(600);
             LineCharBean l = new LineCharBean();
+            //l.setTextLife("哈哈哈");
+            l.setTextBoom("哈哈哈");
             //测试有负数出现
             /*if (i1 < 100) {
 

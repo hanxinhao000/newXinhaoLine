@@ -1,4 +1,4 @@
-package erjinzhi.xinhao.xinhaolib.linedata;
+package erjinzhi.xinhao.xinhaolib.linedata.idata;
 
 
 /**

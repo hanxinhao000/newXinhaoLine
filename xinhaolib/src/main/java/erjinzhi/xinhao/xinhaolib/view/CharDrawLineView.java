@@ -4,19 +4,20 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import erjinzhi.xinhao.xinhaolib.databean.LineCharViewData;
 import erjinzhi.xinhao.xinhaolib.databean.LineViewData;
+import erjinzhi.xinhao.xinhaolib.databean.ScaleLineBoomStringBean;
 import erjinzhi.xinhao.xinhaolib.databean.ScaleLineLifeStringBean;
-import erjinzhi.xinhao.xinhaolib.linedata.IPointData;
+import erjinzhi.xinhao.xinhaolib.linedata.idata.IPointData;
 import erjinzhi.xinhao.xinhaolib.linedata.listener.IScaleLine;
-import erjinzhi.xinhao.xinhaolib.utils.UIUtils;
 
 public class CharDrawLineView extends CharLineView implements IPointData, IScaleLine {
+
+    private static float SLIDING_X = 0;
 
     public CharDrawLineView(Context context) {
         super(context);
@@ -48,14 +49,14 @@ public class CharDrawLineView extends CharLineView implements IPointData, IScale
          * X线
          *
          */
-        canvas.drawLine(x[0], x[1], x[2], x[3], paint);
+        canvas.drawLine(x[0] + SLIDING_X, x[1], x[2] + SLIDING_X, x[3], paint);
         /**
          * Y线
          */
-        canvas.drawLine(y[0], y[1], y[2], y[3], paint);
+        canvas.drawLine(y[0] + SLIDING_X, y[1], y[2] + SLIDING_X, y[3], paint);
 
         /**
-         * 刻度线的数字
+         * 刻度线的数字(左边)
          *
          */
         ArrayList<ScaleLineLifeStringBean> scaleLineLifeStringBeans = mScaleLineData.getScaleLineLifeStringBeans();
@@ -65,15 +66,15 @@ public class CharDrawLineView extends CharLineView implements IPointData, IScale
 
                 canvas.drawText(
                         scaleLineLifeStringBeans.get(i).getText(),
-                        scaleLineLifeStringBeans.get(i).getmX(),
+                        scaleLineLifeStringBeans.get(i).getmX() + SLIDING_X,
                         scaleLineLifeStringBeans.get(i).getmY(),
                         mScaleLineData.getmPaint()
                 );
 
                 canvas.drawLine(
-                        x[0],
+                        x[0] + SLIDING_X,
                         scaleLineLifeStringBeans.get(i).getmY(),
-                        x[0] + NUMBER_OF_SCALE_LINES_LINEG,
+                        x[0] + NUMBER_OF_SCALE_LINES_LINEG + SLIDING_X,
                         scaleLineLifeStringBeans.get(i).getmY(),
                         mScaleLineData.getmPaint()
 
@@ -83,7 +84,36 @@ public class CharDrawLineView extends CharLineView implements IPointData, IScale
             }
 
         }
+        /**
+         * 刻度线的数字(底边)
+         *
+         */
 
+        ArrayList<ScaleLineBoomStringBean> scaleLineBoomStringBeans = mScaleLineData.getScaleLineBoomStringBeans();
+        if (scaleLineBoomStringBeans != null) {
+
+            for (int i = 0; i < scaleLineBoomStringBeans.size(); i++) {
+
+                canvas.drawText(
+                        scaleLineBoomStringBeans.get(i).getText(),
+                        scaleLineBoomStringBeans.get(i).getmX() + SLIDING_X,
+                        scaleLineBoomStringBeans.get(i).getmY(),
+                        mScaleLineData.getmPaint()
+                );
+
+                canvas.drawLine(
+                        scaleLineBoomStringBeans.get(i).getLineStartX() + SLIDING_X,
+                        scaleLineBoomStringBeans.get(i).getLineStartY(),
+                        scaleLineBoomStringBeans.get(i).getLineEndX() + SLIDING_X,
+                        scaleLineBoomStringBeans.get(i).getLineEndY(),
+                        mScaleLineData.getmPaint()
+
+                );
+
+
+            }
+
+        }
     }
 
     /**
@@ -98,9 +128,13 @@ public class CharDrawLineView extends CharLineView implements IPointData, IScale
 
         for (int i = 0; i < viewPointCoordinatesList.size(); i++) {
 
-            canvas.drawCircle(viewPointCoordinatesList.get(i).getViewDataX(), viewPointCoordinatesList.get(i).getViewDataY(), POINT_SIZE, mPointData.getPaint());
+            canvas.drawCircle(
+                    viewPointCoordinatesList.get(i).getViewDataX() + SLIDING_X,
+                    viewPointCoordinatesList.get(i).getViewDataY(),
+                    POINT_SIZE,
+                    mPointData.getPaint());
             canvas.drawText("" + viewPointCoordinatesList.get(i).getData(),
-                    viewPointCoordinatesList.get(i).getViewDataX() + 15,
+                    viewPointCoordinatesList.get(i).getViewDataX() + 15 + SLIDING_X,
                     viewPointCoordinatesList.get(i).getViewDataY(),
                     mPointData.getPaint()
 
@@ -124,9 +158,9 @@ public class CharDrawLineView extends CharLineView implements IPointData, IScale
         for (int i = 0; i < lineViewDatas.size(); i++) {
 
             canvas.drawLine(
-                    lineViewDatas.get(i).getStartX(),
+                    lineViewDatas.get(i).getStartX() + SLIDING_X,
                     lineViewDatas.get(i).getStartY(),
-                    lineViewDatas.get(i).getEndX(),
+                    lineViewDatas.get(i).getEndX() + SLIDING_X,
                     lineViewDatas.get(i).getEndY(),
                     mLineData.getPaint()
             );
@@ -134,5 +168,11 @@ public class CharDrawLineView extends CharLineView implements IPointData, IScale
 
         }
 
+    }
+
+    @Override
+    public void rollingRefreshLineView(float x) {
+         SLIDING_X += x;
+         invalidate();
     }
 }

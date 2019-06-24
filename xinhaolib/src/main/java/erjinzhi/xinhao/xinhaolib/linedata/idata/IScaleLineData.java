@@ -3,7 +3,9 @@ package erjinzhi.xinhao.xinhaolib.linedata.idata;
 import android.graphics.Paint;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import erjinzhi.xinhao.xinhaolib.databean.LineCharViewData;
 import erjinzhi.xinhao.xinhaolib.databean.ScaleLineBoomStringBean;
 import erjinzhi.xinhao.xinhaolib.databean.ScaleLineLifeStringBean;
 import erjinzhi.xinhao.xinhaolib.view.viewlistener.ViewRefreshListener;
@@ -54,4 +56,7 @@ public interface IScaleLineData {
 
     //获取刻度线长度
     public int getScaleWidth();
+
+    //获取数据总和
+    public void setDataSize(int size);
 }

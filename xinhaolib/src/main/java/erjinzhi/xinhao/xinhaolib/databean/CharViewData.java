@@ -5,8 +5,10 @@ import java.util.List;
 import erjinzhi.xinhao.xinhaolib.databean.listener.NotifyDataSetChangedListener;
 import erjinzhi.xinhao.xinhaolib.linedata.LineData;
 import erjinzhi.xinhao.xinhaolib.linedata.PointData;
+import erjinzhi.xinhao.xinhaolib.linedata.RollingLine;
 import erjinzhi.xinhao.xinhaolib.linedata.ScaleLineData;
 import erjinzhi.xinhao.xinhaolib.linedata.idata.ILineData;
+import erjinzhi.xinhao.xinhaolib.linedata.idata.IRollingLine;
 import erjinzhi.xinhao.xinhaolib.linedata.idata.IScaleLineData;
 import erjinzhi.xinhao.xinhaolib.linedata.idata.ImpPointData;
 import erjinzhi.xinhao.xinhaolib.view.viewlistener.CharViewDataRefreshListener;
@@ -25,6 +27,8 @@ public class CharViewData {
     private IScaleLineData mIScaleLineData;
 
     private ImpPointData mPointData;
+
+    private IRollingLine mIRollingLine;
 
     public ImpPointData getmPointData() {
         if (mPointData == null) {
@@ -84,6 +88,9 @@ public class CharViewData {
     }
 
     public List<LineCharBean> getList() {
+        if (mList == null) {
+            throw new RuntimeException("List<LineCharBean> is null");
+        }
         return mList;
     }
 
@@ -107,5 +114,18 @@ public class CharViewData {
         }
 
 
+    }
+
+    public IRollingLine getmIRollingLine() {
+        if (mIRollingLine == null) {
+            mIRollingLine = new RollingLine();
+        }
+
+        return mIRollingLine;
+
+    }
+
+    public void setIRollingLine(IRollingLine mIRollingLine) {
+        this.mIRollingLine = mIRollingLine;
     }
 }

@@ -3,6 +3,7 @@ package erjinzhi.xinhao.xinhaolib.view;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
@@ -10,16 +11,14 @@ import java.util.List;
 
 import erjinzhi.xinhao.xinhaolib.databean.CharViewData;
 import erjinzhi.xinhao.xinhaolib.databean.LineCharBean;
-import erjinzhi.xinhao.xinhaolib.databean.LineCharViewData;
 import erjinzhi.xinhao.xinhaolib.databean.listener.NotifyDataSetChangedListener;
-import erjinzhi.xinhao.xinhaolib.linedata.LineData;
-import erjinzhi.xinhao.xinhaolib.linedata.PointData;
-import erjinzhi.xinhao.xinhaolib.linedata.ScaleLineData;
 import erjinzhi.xinhao.xinhaolib.linedata.idata.ILineData;
+import erjinzhi.xinhao.xinhaolib.linedata.idata.IRollingLine;
 import erjinzhi.xinhao.xinhaolib.linedata.idata.IScaleLineData;
 import erjinzhi.xinhao.xinhaolib.linedata.idata.ImpPointData;
 import erjinzhi.xinhao.xinhaolib.linedata.listener.LineDataViewRefreshListener;
 import erjinzhi.xinhao.xinhaolib.linedata.listener.PointDataViewRefreshListener;
+import erjinzhi.xinhao.xinhaolib.linedata.listener.RollingLineRefreshListener;
 import erjinzhi.xinhao.xinhaolib.view.viewlistener.CharViewDataRefreshListener;
 import erjinzhi.xinhao.xinhaolib.view.viewlistener.ViewRefreshListener;
 
@@ -27,7 +26,7 @@ import erjinzhi.xinhao.xinhaolib.view.viewlistener.ViewRefreshListener;
  * View 底层,这是一款轻量级的线图 作者XINHAO_HAN
  */
 
-public abstract class CharLineView extends View implements ViewRefreshListener, CharViewDataRefreshListener, PointDataViewRefreshListener, LineDataViewRefreshListener, NotifyDataSetChangedListener {
+public abstract class CharLineView extends View implements ViewRefreshListener, CharViewDataRefreshListener, PointDataViewRefreshListener, LineDataViewRefreshListener, NotifyDataSetChangedListener, RollingLineRefreshListener {
 
     private Context mContext;
 
@@ -40,6 +39,8 @@ public abstract class CharLineView extends View implements ViewRefreshListener, 
     ImpPointData mPointData;
 
     ILineData mLineData;
+
+    IRollingLine mIRollingLine;
 
     private CharViewData mCharViewData;
 
@@ -71,6 +72,7 @@ public abstract class CharLineView extends View implements ViewRefreshListener, 
         mCharViewData = new CharViewData();
         mPointData = mCharViewData.getmPointData();
         mLineData = mCharViewData.getmLineData();
+        mIRollingLine = mCharViewData.getmIRollingLine();
         mCharViewData.setCharViewDataRefreshListener(this);
         mCharViewData.setNotifyDataSetChangedListener(this);
     }
@@ -134,6 +136,7 @@ public abstract class CharLineView extends View implements ViewRefreshListener, 
             mScaleLineData.setmHeight(this.mHeight);
         }
 
+        mScaleLineData.setDataSize(mCharViewData.getList().size());
         //刻度线计算完毕通知本View刷新
         mScaleLineData.setViewRefreshListener(this);
         //开始计算
@@ -155,8 +158,10 @@ public abstract class CharLineView extends View implements ViewRefreshListener, 
         mPointData.setScaleWidth(mScaleLineData.getScaleWidth());
         //开始计算
         mPointData.calculate();
-        //将算好的刻度线传入刻度线类
+        //将算好的刻度线传入刻度线类(左边)
         mScaleLineData.setScaleLineLifeStringBeans(mPointData.getScaleLineLifeStringBeans());
+        //将算好的刻度线传入刻度线类(底边)
+        mScaleLineData.setScaleLineBoomStringBeans(mPointData.getScaleLineBoomStringBeans());
 
 
         /**
@@ -175,6 +180,21 @@ public abstract class CharLineView extends View implements ViewRefreshListener, 
          */
         //计算侧边显示标题的值
         mScaleLineData.calculateString();
+
+        /**
+         *
+         * 处理滚动
+         *
+         */
+
+        mIRollingLine.setRollingLineRefreshListener(this);
+        mIRollingLine.setScaleLineBoomStringBeans(mPointData.getScaleLineBoomStringBeans());
+        mIRollingLine.setScaleLineLifeStringBeans(mPointData.getScaleLineLifeStringBeans());
+        mIRollingLine.setViewPointCoordinatesList(mPointData.getViewPointCoordinatesList());
+        mIRollingLine.setLineViewDatas(mLineData.getLineViewDatas());
+        mIRollingLine.setXLine(mScaleLineData.getmX());
+        mIRollingLine.setYLine(mScaleLineData.getmY());
+
 
     }
 
@@ -262,5 +282,17 @@ public abstract class CharLineView extends View implements ViewRefreshListener, 
     public void notifyDataSetChanged() {
 
 
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        //处理触摸事件
+        mIRollingLine.onTouchEventRolling(event);
+        return true;
+    }
+
+    @Override
+    public void rollingRefreshLineView(float x) {
+        invalidate();
     }
 }

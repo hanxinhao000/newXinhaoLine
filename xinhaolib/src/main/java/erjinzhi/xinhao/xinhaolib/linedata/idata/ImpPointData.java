@@ -48,4 +48,6 @@ public interface ImpPointData {
 
     //获取刻度线长度
     public void setScaleWidth(int mScaleWidth);
+    //计算刻度线
+    public void calculateBoomText();
 }
