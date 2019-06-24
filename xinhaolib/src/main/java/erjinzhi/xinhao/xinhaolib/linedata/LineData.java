@@ -65,6 +65,7 @@ public class LineData implements ILineData,DataNotifyDataSetChangedListener {
     }
 
     //获取画笔
+    @Override
     public Paint getPaint() {
         return mPaint;
     }
@@ -91,6 +92,7 @@ public class LineData implements ILineData,DataNotifyDataSetChangedListener {
     }
 
     //获取线的坐标
+    @Override
     public List<LineViewData> getLineViewDatas() {
 
         return mLineViewDatas;

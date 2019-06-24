@@ -10,13 +10,14 @@ import erjinzhi.xinhao.xinhaolib.databean.LineCharViewData;
 import erjinzhi.xinhao.xinhaolib.databean.LineViewData;
 import erjinzhi.xinhao.xinhaolib.databean.ScaleLineBoomStringBean;
 import erjinzhi.xinhao.xinhaolib.databean.ScaleLineLifeStringBean;
+import erjinzhi.xinhao.xinhaolib.linedata.idata.IBaseData;
 import erjinzhi.xinhao.xinhaolib.linedata.idata.IRollingLine;
 import erjinzhi.xinhao.xinhaolib.linedata.listener.RollingLineRefreshListener;
 
 /**
  * 处理滚动
  */
-public class RollingLine implements IRollingLine {
+public class RollingLine implements IRollingLine,IBaseData {
 
     //不得超过的X线
     private static float BORDER;
@@ -31,6 +32,8 @@ public class RollingLine implements IRollingLine {
     private List<LineViewData> mLineViewDatas;
 
     private int[] xLine;
+
+    private int mWidth;
 
     private int[] yLine;
 
@@ -97,20 +100,14 @@ public class RollingLine implements IRollingLine {
 
                 float mid = endX - startX;
 
-               // rollingData(mid);
+                rollingData(mid);
 
                 startX = endX;
 
-                //通知刷新View
-                if (mRollingLineRefreshListener != null) {
-                    mRollingLineRefreshListener.rollingRefreshLineView(mid);
-                }
                 break;
 
 
-
         }
-
 
 
     }
@@ -121,92 +118,44 @@ public class RollingLine implements IRollingLine {
         this.mLineViewDatas = mLineViewDatas;
     }
 
+    @Override
+    public void setWidth(int mWidth) {
+        this.mWidth = mWidth;
+    }
+
     //滑动
 
     private void rollingData(float x) {
 
+        //这块主要是判断，有没有越界
 
-        Log.e("坐标", "rollingData: " + x );
 
-        /**
-         *
-         * 滑动点
-         *
-         */
+        float v = mRollingLineRefreshListener.crossLine();
 
-        for (int i = 0; i < mViewPointCoordinatesList.size(); i++) {
 
-            int viewDataX = mViewPointCoordinatesList.get(i).getViewDataX();
+        int viewDataX = yLine[2];
 
-            mViewPointCoordinatesList.get(i).setViewDataX((int) (viewDataX + x));
+        int temp = (-viewDataX + mWidth);
+        float x1 = scaleLineBoomStringBeans.get(0).getmX();
 
-        }
 
-        /**
-         *
-         * 滑动刻度线
-         *
-         */
-        xLine[0] = (int) (xLine[0] + x);
-        xLine[2] = (int) (xLine[2] + x);
+        //预判断
 
-        yLine[0] = (int) (yLine[0] + x);
-        yLine[2] = (int) (yLine[2] + x);
 
-        /**
-         *
-         * 滑动刻度线的数字(左边)
-         *
-         */
-        for (int i = 0; i < mScaleLineLifeStringBeans.size(); i++) {
 
-            float mX = mScaleLineLifeStringBeans.get(i).getmX();
 
-            mScaleLineLifeStringBeans.get(i).setmX((int) (mX + x));
+        if (v < x1 - LEFT_DISTANCE  || x < 0 ) {
+
+            if(v > temp || x > 0){
+                if (mRollingLineRefreshListener != null) {
+                    mRollingLineRefreshListener.rollingRefreshLineView(x);
+                }
+            }
 
 
         }
 
-        /**
-         *
-         * 滑动线
-         */
 
-        for (int i = 0; i < mLineViewDatas.size(); i++) {
-
-            int startX = mLineViewDatas.get(i).getStartX();
-
-            int endX = mLineViewDatas.get(i).getEndX();
-
-            mLineViewDatas.get(i).setStartX((int) (startX + x));
-
-            mLineViewDatas.get(i).setEndX((int) (endX + x));
-
-
-        }
-
-        /**
-         * 滚动底部
-         *
-         */
-
-        for (int i = 0; i < scaleLineBoomStringBeans.size(); i++) {
-
-            float mX = scaleLineBoomStringBeans.get(i).getmX();
-
-            float lineStartX = scaleLineBoomStringBeans.get(i).getLineStartX();
-
-            float lineEndX = scaleLineBoomStringBeans.get(i).getLineEndX();
-
-
-            scaleLineBoomStringBeans.get(i).setLineEndX(lineEndX + x);
-
-            scaleLineBoomStringBeans.get(i).setLineStartX(lineStartX + x);
-
-            scaleLineBoomStringBeans.get(i).setmX(mX + x);
-
-
-        }
 
     }
 

@@ -84,6 +84,7 @@ public class CharDrawLineView extends CharLineView implements IPointData, IScale
             }
 
         }
+
         /**
          * 刻度线的数字(底边)
          *
@@ -172,7 +173,12 @@ public class CharDrawLineView extends CharLineView implements IPointData, IScale
 
     @Override
     public void rollingRefreshLineView(float x) {
-         SLIDING_X += x;
-         invalidate();
+        SLIDING_X += x;
+        invalidate();
+    }
+
+    @Override
+    public float crossLine() {
+        return mScaleLineData.getScaleLineLifeStringBeans().get(0).getmX() + SLIDING_X;
     }
 }

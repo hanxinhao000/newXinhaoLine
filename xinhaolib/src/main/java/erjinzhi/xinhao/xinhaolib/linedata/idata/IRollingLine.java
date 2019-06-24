@@ -37,9 +37,8 @@ public interface IRollingLine {
     //传入线的坐标
     public void setLineViewDatas(List<LineViewData> mLineViewDatas);
 
-
-
-
+    //传入屏幕宽度
+    public void setWidth(int mWidth);
 
 
 }

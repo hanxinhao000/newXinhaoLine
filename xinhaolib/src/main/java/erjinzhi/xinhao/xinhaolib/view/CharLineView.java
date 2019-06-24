@@ -194,6 +194,7 @@ public abstract class CharLineView extends View implements ViewRefreshListener, 
         mIRollingLine.setLineViewDatas(mLineData.getLineViewDatas());
         mIRollingLine.setXLine(mScaleLineData.getmX());
         mIRollingLine.setYLine(mScaleLineData.getmY());
+        mIRollingLine.setWidth(getViewWidth());
 
 
     }
