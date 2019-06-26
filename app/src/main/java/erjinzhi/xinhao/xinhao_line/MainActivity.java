@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,7 +94,7 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
 
                 CharViewData charViewData1 = char_line.getCharViewData();
-
+                List<LineCharBean> mList = new ArrayList<>();
                 for (int i = 0; i < 20; i++) {
                     int i1 = random.nextInt(600);
 
@@ -101,11 +102,14 @@ public class MainActivity extends Activity {
 
                     l.setData(i1 + 50);
 
+                    mList.add(l);
 
                 }
+                charViewData1.setLineData(mList);
+                charViewData1.build();
 
-                charViewData1.notifyDataSetChanged();
 
+                Toast.makeText(MainActivity.this, "更新数据", Toast.LENGTH_SHORT).show();
             }
         });
 

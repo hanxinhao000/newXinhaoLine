@@ -19,7 +19,7 @@ import erjinzhi.xinhao.xinhaolib.linedata.listener.PointDataViewRefreshListener;
 import erjinzhi.xinhao.xinhaolib.utils.UIUtils;
 
 /**
- * 专门处理点的一个类
+ * 专门处理坐标的一个类
  */
 public class PointData implements IBaseData, IPointData, DataNotifyDataSetChangedListener, ImpPointData, IScaleLine, ILineData {
 
@@ -365,7 +365,6 @@ public class PointData implements IBaseData, IPointData, DataNotifyDataSetChange
 
     //获取最小点位置
 
-    //获取最大点位置
     private float getMinIndex() {
 
         int temp = mViewPointCoordinatesList.get(0).getData();

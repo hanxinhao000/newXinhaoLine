@@ -22,6 +22,8 @@ public class CharDrawLineView extends CharLineView implements IPointData, IScale
 
     private static float SLIDING_X = 0;
 
+
+
     public CharDrawLineView(Context context) {
         super(context);
     }
@@ -49,23 +51,31 @@ public class CharDrawLineView extends CharLineView implements IPointData, IScale
         //高线
         float[] showUpLineView = mIUp2DownLineData.getShowUpLineView();
 
+        float[] up2Down = mIUp2DownLineData.getUp2Down();
+
         //画高线
         canvas.drawLine(
-                showDownLineView[0]+ SLIDING_X,
+                showDownLineView[0] + SLIDING_X,
                 showDownLineView[1],
-                showDownLineView[2]+ SLIDING_X,
+                showDownLineView[2] + SLIDING_X,
                 showDownLineView[3],
                 mIUp2DownLineData.getPaint()
         );
 
+        //画高线数值
+        canvas.drawText(up2Down[0] + "", LEFT_DISTANCE + 100, showDownLineView[1], mIUp2DownLineData.getPaint());
+
+
         //画底线
         canvas.drawLine(
-                showUpLineView[0]+ SLIDING_X,
+                showUpLineView[0] + SLIDING_X,
                 showUpLineView[1],
-                showUpLineView[2]+ SLIDING_X,
+                showUpLineView[2] + SLIDING_X,
                 showUpLineView[3],
                 mIUp2DownLineData.getPaint()
         );
+        //画底线数值
+        canvas.drawText(up2Down[1] + "", LEFT_DISTANCE + 100, showUpLineView[1], mIUp2DownLineData.getPaint());
 
 
         Log.e("高低线坐标", "高线: " + Arrays.toString(showUpLineView));

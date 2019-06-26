@@ -40,4 +40,7 @@ public interface IUp2DownLineData {
     //设置线的总宽度
     public void setScaleLineY(int[] mY);
 
+    //获取高低线
+    public float[] getUp2Down();
+
 }

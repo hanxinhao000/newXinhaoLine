@@ -116,12 +116,16 @@ public class Up2DownLineData implements IUp2DownLineData, IBaseData, IPointData 
         lineMin[3] = BOTTOM_DISTANCE + POINT_INTERVAL + min;
 
 
-
-
         if (mUp2DownLineRefreshListener != null) {
-            mUp2DownLineRefreshListener.up2DownLineRefresh();
+            mUp2DownLineRefreshListener.up2DownLineRefresh(max + "", min + "");
         }
     }
+
+
+    public float[] getUp2Down() {
+        return up2Down;
+    }
+
 
     //初始化画笔
     private void initPaint() {
@@ -131,6 +135,7 @@ public class Up2DownLineData implements IUp2DownLineData, IBaseData, IPointData 
         mPaint.setColor(Color.parseColor("#ad0015"));
         mPaint.setAntiAlias(true);
         mPaint.setStrokeWidth(4);
+        mPaint.setTextSize(25);
         mPaint.setAlpha(50);
 
 

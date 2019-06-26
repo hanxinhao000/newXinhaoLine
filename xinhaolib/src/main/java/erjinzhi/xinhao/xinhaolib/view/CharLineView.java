@@ -12,6 +12,7 @@ import java.util.List;
 import erjinzhi.xinhao.xinhaolib.databean.CharViewData;
 import erjinzhi.xinhao.xinhaolib.databean.LineCharBean;
 import erjinzhi.xinhao.xinhaolib.databean.listener.NotifyDataSetChangedListener;
+import erjinzhi.xinhao.xinhaolib.linedata.idata.IBaseData;
 import erjinzhi.xinhao.xinhaolib.linedata.idata.ILineData;
 import erjinzhi.xinhao.xinhaolib.linedata.idata.IRollingLine;
 import erjinzhi.xinhao.xinhaolib.linedata.idata.IScaleLineData;
@@ -28,7 +29,7 @@ import erjinzhi.xinhao.xinhaolib.view.viewlistener.ViewRefreshListener;
  * View 底层,这是一款轻量级的线图 作者XINHAO_HAN
  */
 
-public abstract class CharLineView extends View implements ViewRefreshListener, CharViewDataRefreshListener, PointDataViewRefreshListener, LineDataViewRefreshListener, NotifyDataSetChangedListener, RollingLineRefreshListener, Up2DownLineRefreshListener {
+public abstract class CharLineView extends View implements ViewRefreshListener, CharViewDataRefreshListener, PointDataViewRefreshListener, LineDataViewRefreshListener, NotifyDataSetChangedListener, RollingLineRefreshListener, Up2DownLineRefreshListener,IBaseData {
 
     private Context mContext;
 
@@ -47,6 +48,8 @@ public abstract class CharLineView extends View implements ViewRefreshListener, 
     IUp2DownLineData mIUp2DownLineData;
 
     private CharViewData mCharViewData;
+
+
 
     private List<LineCharBean> list;
 
@@ -208,7 +211,6 @@ public abstract class CharLineView extends View implements ViewRefreshListener, 
          *
          */
         mIUp2DownLineData.setAverage(mPointData.getAverage());
-
         mIUp2DownLineData.setShowUp2DownLine(mCharViewData.isShowUp2DownLine());
 
         mIUp2DownLineData.setUp2Down(mCharViewData.getUp2Down());
@@ -338,7 +340,7 @@ public abstract class CharLineView extends View implements ViewRefreshListener, 
     }
 
     @Override
-    public void up2DownLineRefresh() {
+    public void up2DownLineRefresh(String max, String min) {
         invalidate();
     }
 }
