@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import java.util.ArrayList;
 import java.util.List;
 
+import erjinzhi.xinhao.xinhaolib.databean.CharViewData;
 import erjinzhi.xinhao.xinhaolib.databean.LineCharBean;
 import erjinzhi.xinhao.xinhaolib.databean.LineCharViewData;
 import erjinzhi.xinhao.xinhaolib.databean.ScaleLineBoomStringBean;
@@ -68,10 +69,21 @@ public class PointData implements IBaseData, IPointData, DataNotifyDataSetChange
      */
     private int mScaleWidth;
 
+    /**
+     * 用户所传递过来的设置
+     */
+    private CharViewData mCharViewData;
+
 
     //平均值
     private float average = 0;
     private XScale mXScale;
+
+
+    @Override
+    public void setCharViewData(CharViewData mCharViewData) {
+        this.mCharViewData = mCharViewData;
+    }
 
     @Override
     public void setList(List<LineCharBean> mList) {
@@ -442,7 +454,13 @@ public class PointData implements IBaseData, IPointData, DataNotifyDataSetChange
                 temp = mList.get(i).getData();
             }
 
-
+        }
+        //如果显示高低线，那就看看高低线的值是不是最大的
+        if (mCharViewData.isShowUp2DownLine()) {
+            float max = mCharViewData.getUp2Down()[1];
+            if (temp < max) {
+                temp = (int) max;
+            }
         }
 
         return temp;
@@ -461,6 +479,14 @@ public class PointData implements IBaseData, IPointData, DataNotifyDataSetChange
                 temp = mList.get(i).getData();
             }
 
+        }
+
+        //如果显示高低线，那就看看高低线的值是不是最大的
+        if (mCharViewData.isShowUp2DownLine()) {
+            float min = mCharViewData.getUp2Down()[0];
+            if (temp > min) {
+                temp = (int) min;
+            }
         }
 
         return temp;

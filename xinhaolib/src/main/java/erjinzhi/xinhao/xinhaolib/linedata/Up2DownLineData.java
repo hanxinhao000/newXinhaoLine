@@ -6,6 +6,7 @@ import android.graphics.Paint;
 
 import java.util.List;
 
+import erjinzhi.xinhao.xinhaolib.databean.CharViewData;
 import erjinzhi.xinhao.xinhaolib.databean.LineCharViewData;
 import erjinzhi.xinhao.xinhaolib.linedata.idata.IBaseData;
 import erjinzhi.xinhao.xinhaolib.linedata.idata.IPointData;
@@ -30,6 +31,8 @@ public class Up2DownLineData implements IUp2DownLineData, IBaseData, IPointData 
     private Paint mPaint;
     //通知视图刷新
     private Up2DownLineRefreshListener mUp2DownLineRefreshListener;
+
+    private CharViewData mCharViewData;
 
     private int mScaleLineY;
 
@@ -124,6 +127,16 @@ public class Up2DownLineData implements IUp2DownLineData, IBaseData, IPointData 
 
     public float[] getUp2Down() {
         return up2Down;
+    }
+
+    @Override
+    public void setCharViewData(CharViewData mCharViewData) {
+        this.mCharViewData = mCharViewData;
+    }
+
+    @Override
+    public CharViewData getCharViewData() {
+        return mCharViewData;
     }
 
 

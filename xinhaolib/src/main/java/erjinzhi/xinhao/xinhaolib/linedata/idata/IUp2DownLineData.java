@@ -4,6 +4,7 @@ import android.graphics.Paint;
 
 import java.util.List;
 
+import erjinzhi.xinhao.xinhaolib.databean.CharViewData;
 import erjinzhi.xinhao.xinhaolib.databean.LineCharViewData;
 import erjinzhi.xinhao.xinhaolib.linedata.listener.Up2DownLineRefreshListener;
 
@@ -42,5 +43,10 @@ public interface IUp2DownLineData {
 
     //获取高低线
     public float[] getUp2Down();
+
+    //设置用户传递过来的开放类
+    public void setCharViewData(CharViewData mCharViewData);
+
+    public CharViewData getCharViewData();
 
 }

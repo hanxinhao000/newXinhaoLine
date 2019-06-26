@@ -29,7 +29,7 @@ import erjinzhi.xinhao.xinhaolib.view.viewlistener.ViewRefreshListener;
  * View 底层,这是一款轻量级的线图 作者XINHAO_HAN
  */
 
-public abstract class CharLineView extends View implements ViewRefreshListener, CharViewDataRefreshListener, PointDataViewRefreshListener, LineDataViewRefreshListener, NotifyDataSetChangedListener, RollingLineRefreshListener, Up2DownLineRefreshListener,IBaseData {
+public abstract class CharLineView extends View implements ViewRefreshListener, CharViewDataRefreshListener, PointDataViewRefreshListener, LineDataViewRefreshListener, NotifyDataSetChangedListener, RollingLineRefreshListener, Up2DownLineRefreshListener, IBaseData {
 
     private Context mContext;
 
@@ -48,7 +48,6 @@ public abstract class CharLineView extends View implements ViewRefreshListener, 
     IUp2DownLineData mIUp2DownLineData;
 
     private CharViewData mCharViewData;
-
 
 
     private List<LineCharBean> list;
@@ -78,9 +77,11 @@ public abstract class CharLineView extends View implements ViewRefreshListener, 
 
         mCharViewData = new CharViewData();
         mPointData = mCharViewData.getmPointData();
+        mPointData.setCharViewData(mCharViewData);
         mLineData = mCharViewData.getmLineData();
         mIRollingLine = mCharViewData.getmIRollingLine();
         mIUp2DownLineData = mCharViewData.getIUp2DownLineData();
+        mIUp2DownLineData.setCharViewData(mCharViewData);
         mCharViewData.setCharViewDataRefreshListener(this);
         mCharViewData.setNotifyDataSetChangedListener(this);
     }

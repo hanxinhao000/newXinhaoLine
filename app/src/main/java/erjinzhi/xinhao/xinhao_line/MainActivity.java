@@ -85,8 +85,12 @@ public class MainActivity extends Activity {
 
         charViewData.setLineData(mList);
 
-        float[] upDown = {100, 500};
-        charViewData.setUp2Down(upDown);
+        /**
+         * 高低线目前不稳定
+         *
+         */
+       // float[] upDown = {100, 1000};
+      //  charViewData.setUp2Down(upDown);
         charViewData.build();
 
         refresh.setOnClickListener(new View.OnClickListener() {

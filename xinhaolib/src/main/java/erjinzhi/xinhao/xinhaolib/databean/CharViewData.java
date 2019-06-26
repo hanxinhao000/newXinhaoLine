@@ -59,7 +59,7 @@ public class CharViewData {
     private float[] up2Down = new float[2];
 
     //是否显示高低线
-    private boolean isShowUp2DownLine = true;
+    private boolean isShowUp2DownLine = false;
 
     public float[] getUp2Down() {
         return up2Down;
@@ -79,6 +79,19 @@ public class CharViewData {
      * @param up2Down
      */
     public void setUp2Down(float[] up2Down) {
+
+        /**
+         *
+         * [0]为底线  [1]为高线，不能让高线小于底线
+         *
+         */
+        if (up2Down[1] < up2Down[0]) {
+
+            throw new RuntimeException("setUp2Down float[min] > float[max]");
+
+        }
+
+
         this.up2Down = up2Down;
     }
 

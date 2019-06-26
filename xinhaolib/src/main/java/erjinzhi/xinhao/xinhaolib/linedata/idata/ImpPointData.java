@@ -5,6 +5,7 @@ import android.graphics.Paint;
 import java.util.ArrayList;
 import java.util.List;
 
+import erjinzhi.xinhao.xinhaolib.databean.CharViewData;
 import erjinzhi.xinhao.xinhaolib.databean.LineCharBean;
 import erjinzhi.xinhao.xinhaolib.databean.LineCharViewData;
 import erjinzhi.xinhao.xinhaolib.databean.ScaleLineBoomStringBean;
@@ -48,9 +49,12 @@ public interface ImpPointData {
 
     //获取刻度线长度
     public void setScaleWidth(int mScaleWidth);
+
     //计算刻度线
     public void calculateBoomText();
 
     //获得平均值
     public float getAverage();
+
+    public void setCharViewData(CharViewData mCharViewData);
 }
